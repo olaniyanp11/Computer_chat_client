@@ -19,7 +19,7 @@ function App() {
     const fetchUser = async () => {
       try {
         console.log("get request");
-        const response = await axios.get('http://localhost:3000/user/refresh',
+        const response = await axios.get('https://computer-chat-api.onrender.com/user/refresh',
           { withCredentials: true });
         console.log(response);
         if (response.data) {

@@ -26,7 +26,7 @@ export const Login = () => {
             else if (!password) {
                 return setError("email field is required")
             }
-            const response = await axios.post("http://localhost:3000/login", { email, password })
+            const response = await axios.post("https://computer-chat-api.onrender.com/login", { email, password })
             console.log(response);
             if (response.data.message) {
                 dispatch(setSuccessMessage("User logged in successfully"))
