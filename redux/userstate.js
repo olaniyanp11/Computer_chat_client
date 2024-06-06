@@ -12,6 +12,7 @@ const initialState = {
   },
   isLoggedIn: false,
   successMessage: "",
+  AccessToken: "",
 };
 
 const userSlice = createSlice({
@@ -30,6 +31,9 @@ const userSlice = createSlice({
     updateUserInfo: (state, action) => {
       state.userInfo = { ...state.userInfo, ...action.payload };
     },
+    setAccessToken: (state, action) => {
+      state.AccessToken = action.payload
+    },
     logout: (state) => {
       state.userInfo = initialState.userInfo;
       state.isLoggedIn = false;
@@ -42,6 +46,7 @@ export const {
   setloginstatus,
   setSuccessMessage,
   updateUserInfo,
+  setAccessToken,
   logout,
 } = userSlice.actions;
 export default userSlice.reducer;

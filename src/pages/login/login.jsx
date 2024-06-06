@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import './login.css'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { setSuccessMessage, setUserInfo, setloginstatus } from '../../../redux/userstate'
+import { setSuccessMessage, setUserInfo, setloginstatus, setAccessToken } from '../../../redux/userstate'
 import { X } from 'lucide-react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 
 export const Login = () => {
     const successMessage = useSelector((state) => state.user.successMessage);
+    const accesstoken = useSelector((state) => state.user.accesstoken);
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const isLoggedIn = useSelector((state) => state.isLoggedIn)
-
     const dispatch = useDispatch()
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
     const handlelogin = async (e) => {
         e.preventDefault()
@@ -26,12 +28,15 @@ export const Login = () => {
             else if (!password) {
                 return setError("email field is required")
             }
-            const response = await axios.post("https://computer-chat-api.onrender.com/login", { email, password })
+            const url = apiBaseUrl + '/login';
+            console.log(url);
+            const response = await axios.post(url, { email, password })
             console.log(response);
             if (response.data.message) {
                 dispatch(setSuccessMessage("User logged in successfully"))
                 dispatch(setloginstatus())
                 dispatch(setUserInfo(response.data.user))
+                dispatch(setAccessToken(response.data.AccessToken))
                 window.localStorage.setItem('token', response.data.token)
             }
             else {
@@ -41,6 +46,7 @@ export const Login = () => {
             setError(error.response.data.message);
         }
     }
+
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -115,9 +121,9 @@ export const Login = () => {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <Link to="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="mt-2">
@@ -146,9 +152,9 @@ export const Login = () => {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
-                        <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                             signup now
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>

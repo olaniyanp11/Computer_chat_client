@@ -11,20 +11,26 @@ import { Logout } from './pages/components/logout';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { AllPosts } from './pages/AllPosts/AllPosts';
-import { setloginstatus, setUserInfo } from '../redux/userstate';
+import { setloginstatus, setUserInfo,setAccessToken } from '../redux/userstate';
 function App() {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const accesstoken = useSelector((state) => state.user.accesstoken);
   const dispatch = useDispatch()
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+  const url = apiBaseUrl + '/user/refresh';
+  console.log(url);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         console.log("get request");
-        const response = await axios.get('https://computer-chat-api.onrender.com/user/refresh',
+
+        const response = await axios.get(url,
           { withCredentials: true });
         console.log(response);
         if (response.data) {
-          dispatch(setUserInfo(response.data));
+          dispatch(setUserInfo(response.data.user));
           dispatch(setloginstatus(true));
+          dispatch(setAccessToken(response.data.accesstoken))
           console.log(response.data);
         }
       } catch (error) {
