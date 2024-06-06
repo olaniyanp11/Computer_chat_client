@@ -17,7 +17,7 @@ export const Login = () => {
     const [error, setError] = useState("")
     const isLoggedIn = useSelector((state) => state.isLoggedIn)
     const dispatch = useDispatch()
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://computer-chat-api.onrender.com';
+    const apiBaseUrl =  'https://computer-chat-api.onrender.com';
 
     const handlelogin = async (e) => {
         e.preventDefault()
