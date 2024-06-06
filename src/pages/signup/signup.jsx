@@ -19,7 +19,7 @@ const Signup = () => {
   const [success, setSuccess] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate() 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://computer-chat-api.onrender.com';
+  const apiBaseUrl = 'https://computer-chat-api.onrender.com';
   const url = apiBaseUrl + '/signup'
   const handleSubmit = async (e) => {
     e.preventDefault();
