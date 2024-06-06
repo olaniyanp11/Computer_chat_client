@@ -18,7 +18,9 @@ const Signup = () => {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const navigate = useNavigate() 
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://computer-chat-api.onrender.com';
+  const url = apiBaseUrl + '/signup'
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,7 +32,7 @@ const Signup = () => {
     if (!password) return setError("Password is required");
 
     try {
-      const response = await axios.post('http://localhost:3000/signup', {
+      const response = await axios.post(url, {
         firstname,
         lastname,
         username,

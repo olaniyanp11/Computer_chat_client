@@ -11,7 +11,7 @@ export const UserPosts = () => {
     const AccessToken = useSelector((state) => state.user.AccessToken)
     const [post, setPost] = useState('')
     const [load, setLoad] = useState(false)
-    const base_url = import.meta.env.VITE_API_BASE_URL
+    const base_url = import.meta.env.VITE_API_BASE_URL || 'https://computer-chat-api.onrender.com'
     const url = base_url + '/post/create'
     console.log(url);
     const dispatch = useDispatch()
